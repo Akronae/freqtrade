@@ -534,12 +534,12 @@ class FreqtradeBot(LoggingMixin):
                                                        constants.DEFAULT_AMOUNT_RESERVE_PERCENT)
         amount_reserve_percent += self.strategy.stoploss
         # it should not be more than 50%
-        amount_reserve_percent = max(amount_reserve_percent, 0.5)
+        amount_reserve_percent = min(amount_reserve_percent, 0.5)
 
         # The value returned should satisfy both limits: for amount (base currency) and
         # for cost (quote, stake currency), so max() is used here.
         # See also #2575 at github.
-        return max(min_stake_amounts) / amount_reserve_percent
+        return max(min_stake_amounts)
 
     def create_trade(self, pair: str) -> bool:
         """
